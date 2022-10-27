@@ -4,8 +4,15 @@ on:
   workflow_run:
     workflows: ["CI"]
     branches: [main]
-    types: 
+    types:
       - completed
+
+env:
+  ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+  ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+  ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
 jobs:
   deploy-terraform:
     runs-on: ubuntu-latest
@@ -25,10 +32,4 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
       - name: Terraform Apply
-        env:
-          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
         run: terraform apply -auto-approve
-    
