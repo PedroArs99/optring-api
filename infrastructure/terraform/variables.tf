@@ -7,6 +7,6 @@ variable "location" {
 }
 
 variable "optring_github_token" {
-  type = string
+  type      = string
   sensitive = true
 }
