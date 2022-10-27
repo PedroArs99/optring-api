@@ -19,7 +19,7 @@ resource "azurerm_service_plan" "optring_sp" {
 }
 
 resource "azurerm_linux_web_app" "optring_app" {
-  name                = "example"
+  name                = "${var.name}-app"
   resource_group_name = azurerm_resource_group.optring_rg.name
   location            = azurerm_resource_group.optring_rg.location
   service_plan_id     = azurerm_service_plan.optring_sp.id
