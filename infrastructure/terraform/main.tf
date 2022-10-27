@@ -37,3 +37,8 @@ resource "azurerm_app_service_source_control" "optring_github_repo" {
   repo_url = "https://github.com/PedroArs99/optring-api"
   branch   = "main"
 }
+
+resource "azurerm_source_control_token" "optring_github_token" {
+  type  = "GitHub"
+  token = var.optring_github_token
+}
