@@ -20,11 +20,20 @@ resource "azurerm_service_plan" "optring_sp" {
 
 resource "azurerm_linux_web_app" "optring_app" {
   name                = "${var.name}-app"
-  resource_group_name = azurerm_resource_group.optring_rg.name
+  https_only          = true
   location            = azurerm_resource_group.optring_rg.location
+  resource_group_name = azurerm_resource_group.optring_rg.name
   service_plan_id     = azurerm_service_plan.optring_sp.id
 
   site_config {
-    always_on = false
+    always_on           = false
+    minimum_tls_version = "1.2"
   }
+}
+
+#  Deploy code from a public GitHub repo
+resource "azurerm_app_service_source_control" "optring_github_repo" {
+  app_id             = azurerm_linux_web_app.optring_app.id
+  repo_url           = "https://github.com/PedroArs99/optring-api"
+  branch             = "main"
 }
