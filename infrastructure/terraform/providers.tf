@@ -7,6 +7,13 @@ terraform {
       version = "=3.28.0"
     }
   }
+
+  backend "azurerm" {
+    resource_group_name  = "optring-terraform"
+    storage_account_name = "optringterraformbackend"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
 }
 
 # Configure the Microsoft Azure Provider
