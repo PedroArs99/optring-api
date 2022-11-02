@@ -2,6 +2,8 @@ version: '3.8'
 services:
 
   optring:
-    image: ghcr.io/pedroars99/optring:latest
+    image: ghcr.io/pedroars99/optring-api:latest
     pull_policy: always
     container_name: optring
+    ports:
+      - 3000:3000

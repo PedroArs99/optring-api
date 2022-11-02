@@ -1,0 +1,21 @@
+---
+- name: Deploy Optring API
+  hosts: optring
+  tasks:
+    - name: Checkout
+      git:
+        repo: "{{ repo }}"
+        dest: "{{ src  }}"
+
+    - name: Tear down
+      docker_compose:
+        project_src: "{{ src }}/infrastructure/docker"
+        remove_images: all
+        state: absent
+    
+    - name: Launch
+      docker_compose:
+        project_src: "{{ src }}/infrastructure/docker"
+        pull: yes
+        recreate: always
+        state: present
