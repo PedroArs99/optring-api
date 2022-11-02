@@ -1,0 +1,9 @@
+.github
+dist/
+infrastructure
+node_modules
+test
+.eslintrc.js
+.gitignore
+.prettierrc
+Readme.md
