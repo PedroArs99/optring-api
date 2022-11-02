@@ -1,0 +1,5 @@
+[optring]
+13.94.204.164 
+
+[optring:vars]
+ansible_user=optring
