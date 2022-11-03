@@ -71,14 +71,6 @@ resource "random_id" "random_id" {
   byte_length = 8
 }
 
-resource "azurerm_storage_account" "optring_storage_account" {
-  name                     = "diag${random_id.random_id.hex}"
-  location                 = azurerm_resource_group.optring_rg.location
-  resource_group_name      = azurerm_resource_group.optring_rg.name
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-}
-
 resource "tls_private_key" "optring_ssh_key" {
   algorithm = "RSA"
   rsa_bits  = 4096
@@ -100,7 +92,7 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
   source_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
+    sku       = "20.04-LTS"
     version   = "latest"
   }
 
@@ -111,9 +103,5 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
   admin_ssh_key {
     username   = var.name
     public_key = tls_private_key.optring_ssh_key.public_key_openssh
-  }
-
-  boot_diagnostics {
-    storage_account_uri = azurerm_storage_account.optring_storage_account.primary_blob_endpoint
   }
 }
