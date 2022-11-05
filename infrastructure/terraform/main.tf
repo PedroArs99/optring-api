@@ -23,7 +23,7 @@ resource "azurerm_public_ip" "optring_public_ip" {
   name                = "${var.name}-public-ip"
   location            = azurerm_resource_group.optring_rg.location
   resource_group_name = azurerm_resource_group.optring_rg.name
-  allocation_method   = "Dynamic"
+  allocation_method   = "Static"
 }
 
 resource "azurerm_network_security_group" "optring_nsg" {
@@ -85,7 +85,7 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
     name                 = "${var.name}-VM-OS-Disk"
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
-    disk_size_gb = 64
+    disk_size_gb         = 64
   }
 
   source_image_reference {
