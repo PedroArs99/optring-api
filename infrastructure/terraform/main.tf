@@ -74,20 +74,6 @@ resource "azurerm_network_interface_security_group_association" "optring_sg_nic"
   network_security_group_id = azurerm_network_security_group.optring_nsg.id
 }
 
-resource "random_id" "random_id" {
-  keepers = {
-    # Generate a new ID only when a new resource group is defined
-    resource_group = azurerm_resource_group.optring_rg.name
-  }
-
-  byte_length = 8
-}
-
-resource "tls_private_key" "optring_ssh_key" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
-
 resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
   name                  = "${var.name}-VM"
   location              = azurerm_resource_group.optring_rg.location
@@ -115,6 +101,6 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
 
   admin_ssh_key {
     username   = var.name
-    public_key = tls_private_key.optring_ssh_key.public_key_openssh
+    public_key = file("optring@azure.pub")
   }
 }
