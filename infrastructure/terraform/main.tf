@@ -86,7 +86,8 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
   os_disk {
     name                 = "${var.name}-VM-OS-Disk"
     caching              = "ReadWrite"
-    storage_account_type = "Premium_LRS"
+    storage_account_type = "Standard_LRS"
+    disk_size_gb = 64
   }
 
   source_image_reference {
