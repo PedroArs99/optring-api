@@ -6,6 +6,7 @@
       git:
         repo: "{{ repo }}"
         dest: "{{ src  }}"
+        force: yes
 
     - name: Tear down
       docker_compose:
