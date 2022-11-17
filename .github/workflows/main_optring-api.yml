@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v1
       with:
         registry: https://ghcr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_20d2f4686dd44cdf80ea504667d3b009 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_9621af76cc5a47dfa09d09e8bda81646 }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ghcr.io/${{ secrets.AzureAppService_ContainerUsername_20d2f4686dd44cdf80ea504667d3b009 }}/optring-api:${{ github.sha }}
+        tags: ghcr.io/${{ github.actor }}/optring-api:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -48,4 +48,4 @@ jobs:
         app-name: 'optring-api'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_8d9c767e09e0494f8e9233813379b694 }}
-        images: 'ghcr.io/${{ secrets.AzureAppService_ContainerUsername_20d2f4686dd44cdf80ea504667d3b009 }}/optring-api:${{ github.sha }}'
+        images: 'ghcr.io/${{ github.actor }}/optring-api:${{ github.sha }}'
