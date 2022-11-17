@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ghcr.io/${{ github.actor }}/optring-api:${{ github.sha }}
+        tags: ghcr.io/${{ github.repository }}/optring-api:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -48,4 +48,4 @@ jobs:
         app-name: 'optring-api'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_8d9c767e09e0494f8e9233813379b694 }}
-        images: 'ghcr.io/${{ github.actor }}/optring-api:${{ github.sha }}'
+        images: 'ghcr.io/${{ github.repository }}/optring-api:${{ github.sha }}'
