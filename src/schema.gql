@@ -1,0 +1,15 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""cat"""
+type Cat {
+  age: Float!
+  breed: String!
+  id: ID!
+  name: String!
+}
+
+type Query {
+  cats: [Cat!]!
+}
