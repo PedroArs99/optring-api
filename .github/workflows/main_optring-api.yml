@@ -56,4 +56,4 @@ jobs:
           app-name: "optring-api"
           slot-name: "production"
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_8d9c767e09e0494f8e9233813379b694 }}
-          images: "ghcr.io/${{ github.repository }}:${{ github.sha }}"
+          images: "ghcr.io/${{ steps.meta.outputs.tags }}"
