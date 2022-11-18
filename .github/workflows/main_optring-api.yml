@@ -9,6 +9,11 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: pedroars99/optring-api
+
+
 jobs:
   build:
     runs-on: "ubuntu-latest"
@@ -26,19 +31,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: ghcr.io/${{ github.repository }}
-          tags: ${{ github.sha }}
-
       - name: Build and push container image to registry
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{github.sha}}
           file: ./Dockerfile
 
   deploy:
@@ -56,4 +53,4 @@ jobs:
           app-name: "optring-api"
           slot-name: "production"
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_8d9c767e09e0494f8e9233813379b694 }}
-          images: "ghcr.io/${{ steps.meta.outputs.tags }}"
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{github.sha}}
