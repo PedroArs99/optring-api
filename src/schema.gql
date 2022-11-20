@@ -2,14 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-"""cat"""
-type Cat {
-  age: Float!
-  breed: String!
+"""company"""
+type CompanyDto {
+  contactEmail: String!
   id: ID!
   name: String!
 }
 
+input CreateCompanyInput {
+  contactEmail: String!
+  name: String!
+}
+
+type Mutation {
+  createCompany(createCompanyData: CreateCompanyInput!): CompanyDto!
+}
+
 type Query {
-  cats: [Cat!]!
+  companies: [CompanyDto!]!
 }
