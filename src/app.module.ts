@@ -18,7 +18,6 @@ import { TestModule } from './modules/test/test.module';
       sortSchema: true,
     }),
     MongooseModule.forRoot(process.env.MONGO_CONNECTION_STRING),
-    TestModule,
   ],
   controllers: [AppController],
   providers: [AppService],
