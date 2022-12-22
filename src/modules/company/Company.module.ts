@@ -5,10 +5,11 @@ import { Mongoose } from 'mongoose';
 import { CompanyEntity, CompanySchema } from './adapters/db/company.entity';
 import { CompanyMongoRepository } from './adapters/db/Company.repository';
 import { CompanyResolver } from './adapters/graphql/Company.resolver';
+import { CreateAreaCommand, CreateAreaCommandHandler } from './application/commands/CreateArea.command';
 import { CreateCompanyCommandHandler } from './application/commands/CreateCompany.command';
 import { CompaniesQueryHandler } from './application/queries/Companies.query';
 
-const commandHandlers = [CreateCompanyCommandHandler];
+const commandHandlers = [CreateCompanyCommandHandler, CreateAreaCommandHandler];
 const graphQLResolvers = [CompanyResolver];
 const queryHandlers = [CompaniesQueryHandler];
 

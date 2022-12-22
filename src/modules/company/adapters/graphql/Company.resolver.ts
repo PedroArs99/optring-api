@@ -1,5 +1,6 @@
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Args, Field, InputType, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { CreateAreaCommand } from '../../application/commands/CreateArea.command';
 import { CreateCompanyCommand } from '../../application/commands/CreateCompany.command';
 import { CompaniesQuery } from '../../application/queries/Companies.query';
 import { Company } from '../../models/Company.model';
@@ -12,6 +13,15 @@ export class CreateCompanyInput {
 
   @Field()
   contactEmail: string;
+}
+
+@InputType()
+export class CreateAreaInput {
+  @Field()
+  companyId: string;
+
+  @Field()
+  name: string;
 }
 
 
@@ -27,6 +37,18 @@ export class CompanyResolver {
     const command = new CreateCompanyCommand(
         input.name,
         input.contactEmail
+    )
+    
+    const result = await this.commandBus.execute(command);
+
+    return CompanyDto.fromDomain(result)
+  }
+
+  @Mutation(_ => CompanyDto)
+  async registerNewArea(@Args('createAreaData') input: CreateAreaInput) {
+    const command = new CreateAreaCommand(
+        input.companyId,
+        input.name
     )
     
     const result = await this.commandBus.execute(command);

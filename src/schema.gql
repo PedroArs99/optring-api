@@ -16,6 +16,11 @@ type CompanyDto {
   name: String!
 }
 
+input CreateAreaInput {
+  companyId: String!
+  name: String!
+}
+
 input CreateCompanyInput {
   contactEmail: String!
   name: String!
@@ -23,6 +28,7 @@ input CreateCompanyInput {
 
 type Mutation {
   createCompany(createCompanyData: CreateCompanyInput!): CompanyDto!
+  registerNewArea(createAreaData: CreateAreaInput!): CompanyDto!
 }
 
 type Query {
