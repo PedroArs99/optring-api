@@ -11,6 +11,12 @@ export class CompanyMongoRepository implements CompanyRepository {
     @InjectModel(CompanyEntity.name)
     private companyModel: Model<CompanyDocument>,
   ) {}
+  
+  async findById(id: string): Promise<Company> {
+    const entity = await this.companyModel.findById(id).exec();
+
+    return CompanyEntity.toDomain(entity);
+  }
 
   async save(company: Company): Promise<Company> {
     const entity = CompanyEntity.fromDomain(company);
