@@ -18,12 +18,11 @@ export class CompanyMongoRepository implements CompanyRepository {
     return CompanyEntity.toDomain(entity);
   }
 
-  async save(company: Company): Promise<Company> {
+  async save(company: Company): Promise<void> {
     const entity = CompanyEntity.fromDomain(company);
-    let savedEntity = new this.companyModel(entity);
-    savedEntity.save();
-
-    return CompanyEntity.toDomain(savedEntity);
+    await this.companyModel
+      .updateOne({ _id: entity._id }, entity, { upsert: true })
+      .exec();
   }
 
   async findAll(): Promise<Company[]> {

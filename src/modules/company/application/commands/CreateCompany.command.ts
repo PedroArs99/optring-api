@@ -20,7 +20,7 @@ export class CreateCompanyCommandHandler
 
   async execute(command: CreateCompanyCommand): Promise<Company> {
     let newCompany = Company.create(command.name, command.contactEmail);
-    newCompany = await this.companyRepo.save(newCompany);
+    await this.companyRepo.save(newCompany);
 
     return newCompany;
   }
