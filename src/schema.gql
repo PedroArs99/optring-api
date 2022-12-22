@@ -2,8 +2,15 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""area"""
+type AreaDto {
+  id: ID!
+  name: String!
+}
+
 """company"""
 type CompanyDto {
+  areas: [AreaDto!]!
   contactEmail: String!
   id: ID!
   name: String!
