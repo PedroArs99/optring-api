@@ -13,7 +13,7 @@ export class Area {
     return new Area(uuidv4(), name);
   }
 
-  static load(id: string, name: string, contactEmail: string): Area {
+  static load(id: string, name: string): Area {
     return new Area(
       id,
       name,
