@@ -2,10 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""area"""
+type AreaDto {
+  id: ID!
+  name: String!
+}
+
 """company"""
 type CompanyDto {
+  areas: [AreaDto!]!
   contactEmail: String!
   id: ID!
+  name: String!
+}
+
+input CreateAreaInput {
+  companyId: String!
   name: String!
 }
 
@@ -16,6 +28,7 @@ input CreateCompanyInput {
 
 type Mutation {
   createCompany(createCompanyData: CreateCompanyInput!): CompanyDto!
+  registerNewArea(createAreaData: CreateAreaInput!): CompanyDto!
 }
 
 type Query {
