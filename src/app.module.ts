@@ -7,6 +7,7 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CompanyModule } from './modules/company/Company.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { CompanyModule } from './modules/company/Company.module';
       sortSchema: true,
     }),
     MongooseModule.forRoot(process.env.MONGO_CONNECTION_STRING),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
