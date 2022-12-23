@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Mongoose } from 'mongoose';
 import { CompanyEntity, CompanySchema } from './adapters/db/company.entity';
 import { CompanyMongoRepository } from './adapters/db/Company.repository';
 import { CompanyResolver } from './adapters/graphql/Company.resolver';
-import { CreateAreaCommand, CreateAreaCommandHandler } from './application/commands/CreateArea.command';
+import { CreateAreaCommandHandler } from './application/commands/CreateArea.command';
 import { CreateCompanyCommandHandler } from './application/commands/CreateCompany.command';
 import { CompaniesQueryHandler } from './application/queries/Companies.query';
 
