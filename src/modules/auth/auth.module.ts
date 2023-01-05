@@ -1,7 +1,18 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './CognitoAuth.service';
+import { CqrsModule } from '@nestjs/cqrs';
+import { CognitoAuthService } from './adapters/aws/CognitoAuth.service';
+import { AuthController } from './adapters/graphql/Auth.controller';
+import { RegisterUserCommandHandler } from './application/commands/RegisterUser.command';
 
 @Module({
-  providers: [AuthService]
+  controllers: [AuthController],
+  imports: [CqrsModule],
+  providers: [
+    {
+      provide: 'AuthService',
+      useClass: CognitoAuthService,
+    },
+    RegisterUserCommandHandler,
+  ],
 })
 export class AuthModule {}
