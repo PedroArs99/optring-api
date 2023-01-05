@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CognitoUser, CognitoUserAttribute, CognitoUserPool } from 'amazon-cognito-identity-js';
-import { RegisterUserCommand } from './RegisterUser.command';
+import { CognitoUserAttribute, CognitoUserPool } from 'amazon-cognito-identity-js';
+import { AuthService } from '../../application/ports/Auth.service';
+import { User } from '../../models/User.model';
 
 @Injectable()
-export class CognitoAuthService {
+export class CognitoAuthService implements AuthService {
   private userPool: CognitoUserPool;
 
   constructor() {
@@ -13,10 +14,8 @@ export class CognitoAuthService {
     });
   }
 
-  async registerUser(command: RegisterUserCommand): Promise<CognitoUser> {
-    const { email, name, password } = command;
-
-    const result = new Promise<CognitoUser>((resolve, reject) => {
+  async signUp(email: string, name: string, password: any): Promise<User> {
+    const result = new Promise<User>((resolve, reject) => {
       this.userPool.signUp(
         email,
         password,
@@ -28,11 +27,11 @@ export class CognitoAuthService {
         ],
         null,
         (err, result) => {
-          console.log(result);
           if (!result) {
             reject(err);
           } else {
-            resolve(result.user);
+            const user = new User(email, name);
+            resolve(user);
           }
         },
       );
