@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { CognitoUserAttribute, CognitoUserPool } from 'amazon-cognito-identity-js';
+import {
+  AuthenticationDetails,
+  CognitoUser,
+  CognitoUserAttribute,
+  CognitoUserPool,
+} from 'amazon-cognito-identity-js';
 import { AuthService } from '../../application/ports/Auth.service';
+import { AccessData } from '../../models/AccessData.model';
 import { User } from '../../models/User.model';
 
 @Injectable()
@@ -12,6 +18,37 @@ export class CognitoAuthService implements AuthService {
       UserPoolId: process.env.COGNITO_USER_POOL_ID,
       ClientId: process.env.COGNITO_CLIENT_ID,
     });
+  }
+
+  async authenticate(email: string, password: string): Promise<AccessData> {
+    const userData = {
+      Username: email,
+      Pool: this.userPool,
+    };
+
+    const authenticationDetails = new AuthenticationDetails({
+      Username: email,
+      Password: password,
+    });
+
+    const cognitoUser = new CognitoUser(userData);
+
+    const result = new Promise<AccessData>((resolve, reject) => {
+      cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: result => {
+          resolve(
+            new AccessData(
+              result.getAccessToken().getJwtToken(),
+              result.getRefreshToken().getToken(),
+            ),
+          );
+        },
+        onFailure: err => {
+          reject(err);
+        },
+      });
+    });
+    return result;
   }
 
   async signUp(email: string, name: string, password: any): Promise<User> {
