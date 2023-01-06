@@ -6,19 +6,21 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TestModule } from './modules/test/test.module';
+import { CompanyModule } from './modules/company/Company.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    CompanyModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       driver: ApolloDriver,
-      include: [TestModule],
+      include: [CompanyModule],
       sortSchema: true,
     }),
     MongooseModule.forRoot(process.env.MONGO_CONNECTION_STRING),
-    TestModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

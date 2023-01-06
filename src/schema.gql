@@ -2,14 +2,35 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-"""cat"""
-type Cat {
-  age: Float!
-  breed: String!
+"""area"""
+type AreaDto {
   id: ID!
   name: String!
 }
 
+"""company"""
+type CompanyDto {
+  areas: [AreaDto!]!
+  contactEmail: String!
+  id: ID!
+  name: String!
+}
+
+input CreateAreaInput {
+  companyId: String!
+  name: String!
+}
+
+input CreateCompanyInput {
+  contactEmail: String!
+  name: String!
+}
+
+type Mutation {
+  createCompany(createCompanyData: CreateCompanyInput!): CompanyDto!
+  registerNewArea(createAreaData: CreateAreaInput!): CompanyDto!
+}
+
 type Query {
-  cats: [Cat!]!
+  companies: [CompanyDto!]!
 }

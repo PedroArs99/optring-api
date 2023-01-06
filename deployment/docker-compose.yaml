@@ -1,0 +1,19 @@
+version: '3.8'
+networks:
+  infrastructure_tc_infrastructure:
+    external: true
+
+services:
+  termite_cloud:
+      image: ghcr.io/pedroars99/optring-api:latest
+      pull_policy: always
+      container_name: optring_api
+      networks:
+        - infrastructure_tc_infrastructure
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.optring_api.entrypoints=websecure
+        - traefik.http.routers.optring_api.rule=Host(`optring.termite.cloud`)
+        - traefik.http.routers.optring_api.tls=true
+        - traefik.http.routers.optring_api.tls.certresolver=letsencrypt
+        - traefik.http.services.optring_api.loadbalancer.server.port=3000
